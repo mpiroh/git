@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Automat {
-	List<Stav> stavy = new ArrayList<Stav>();
-	Stav pociatocnyStav;
-	Stav koncovyStav;
+	private List<Stav> stavy = new ArrayList<Stav>();
+	private Stav pociatocnyStav;
+	private Stav koncovyStav;
+	private Stav aktualnyStav;
 	
 	public void pridajStav(Stav stav) {
 		stavy.add(stav);
@@ -37,6 +38,14 @@ public class Automat {
 		this.koncovyStav = koncovyStav;
 	}
 
+	public Stav getAktualnyStav() {
+		return aktualnyStav;
+	}
+
+	public void setAktualnyStav(Stav aktualnyStav) {
+		this.aktualnyStav = aktualnyStav;
+	}
+	
 	public List<Stav> getStavy() {
 		return stavy;
 	}

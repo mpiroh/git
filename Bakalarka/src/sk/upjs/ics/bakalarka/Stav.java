@@ -7,11 +7,9 @@ public class Stav {
 	public static final int MAX_ZNAKOV = 26;
 	public static final int POSUN = 97;
 
-	int id;
-	boolean jePociatocny;
-	boolean jeKoncovy;
-	List<Stav> prechody[] = new ArrayList[MAX_ZNAKOV];
-	List<Stav> epsilonPrechody = new ArrayList();
+	private int id;
+	private List<Stav> prechody[] = new ArrayList[MAX_ZNAKOV];
+	private List<Stav> epsilonPrechody = new ArrayList();
 
 	public Stav() {
 		for (int i = 0; i < prechody.length; i++) {
@@ -28,21 +26,6 @@ public class Stav {
 	}
 
 	//------------------------------------------------------------------------
-	public boolean isJePociatocny() {
-		return jePociatocny;
-	}
-
-	public void setJePociatocny(boolean jePociatocny) {
-		this.jePociatocny = jePociatocny;
-	}
-
-	public boolean isJeKoncovy() {
-		return jeKoncovy;
-	}
-
-	public void setJeKoncovy(boolean jeKoncovy) {
-		this.jeKoncovy = jeKoncovy;
-	}
 
 	public List<Stav>[] getPrechody() {
 		return prechody;
