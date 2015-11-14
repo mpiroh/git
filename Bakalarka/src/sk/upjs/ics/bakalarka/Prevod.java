@@ -30,11 +30,15 @@ public class Prevod {
 				continue;
 			}
 			if (znak == '(') {
-				zatvorka();
+				zaciatokZatvorky();
 				continue;
 			}
 			if (znak == ')') {
-				koniecZatvorky();
+				if (dalsiZnak != '*') {
+					koniecZatvorky();
+				} else {
+					koniecZatvorkySHviezdickou();
+				}
 				continue;
 			}
 
@@ -98,25 +102,34 @@ public class Prevod {
 		}
 	}
 
-	public void zatvorka() {
+	public void zaciatokZatvorky() {
 		vZatvorke = true;
 		Stav s1 = new Stav();
 		Stav s2 = new Stav();
-		Stav s3 = new Stav();
 		automat.pridajStav(s1);
 		automat.pridajStav(s2);
-		automat.pridajStav(s3);
 		aktualnyStav.pridajEpsilonPrechod(s1);
-		s1.pridajEpsilonPrechod(s2);
-		zaciatkyZatvoriek.push(s1);
-		konceZatvoriek.push(s3);
-		aktualnyStav = s2;
+		zaciatkyZatvoriek.push(aktualnyStav);
+		konceZatvoriek.push(s2);
+		aktualnyStav = s1;
 	}
 	
 	public void koniecZatvorky() {
 		aktualnyStav.pridajEpsilonPrechod(konceZatvoriek.peek());
 		aktualnyStav = konceZatvoriek.pop();
+		
 		zaciatkyZatvoriek.pop();
+		if (zaciatkyZatvoriek.isEmpty()) {
+			vZatvorke = false;
+		}
+	}
+	
+	public void koniecZatvorkySHviezdickou() {
+		aktualnyStav.pridajEpsilonPrechod(konceZatvoriek.peek());
+		aktualnyStav = konceZatvoriek.peek();
+		
+		zaciatkyZatvoriek.peek().pridajEpsilonPrechod(konceZatvoriek.peek());
+		konceZatvoriek.pop().pridajEpsilonPrechod(zaciatkyZatvoriek.pop());
 		if (zaciatkyZatvoriek.isEmpty()) {
 			vZatvorke = false;
 		}
