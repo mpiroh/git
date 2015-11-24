@@ -126,7 +126,10 @@ public class Prevod {
 	
 	public void koniecZatvorkySHviezdickou() {
 		aktualnyStav.pridajEpsilonPrechod(konceZatvoriek.peek());
-		aktualnyStav = konceZatvoriek.peek();
+		Stav s1 = new Stav();
+		konceZatvoriek.peek().pridajEpsilonPrechod(s1);
+		automat.pridajStav(s1);
+		aktualnyStav = s1;
 		
 		zaciatkyZatvoriek.peek().pridajEpsilonPrechod(konceZatvoriek.peek());
 		konceZatvoriek.pop().pridajEpsilonPrechod(zaciatkyZatvoriek.pop());
