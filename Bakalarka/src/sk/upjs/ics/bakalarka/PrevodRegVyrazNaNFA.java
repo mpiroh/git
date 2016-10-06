@@ -2,7 +2,7 @@ package sk.upjs.ics.bakalarka;
 
 import java.util.Stack;
 
-public class Prevod {
+public class PrevodRegVyrazNaNFA {
 	private String vyraz;
 	private Automat automat;
 	private Stav pociatocnyStav;
@@ -147,6 +147,6 @@ public class Prevod {
 		automat.pridajStav(koncovyStav);
 		automat.pridajStav(aktualnyStav);
 		automat.setPociatocnyStav(pociatocnyStav);
-		automat.setKoncovyStav(koncovyStav);
+		automat.pridajKoncovyStav(koncovyStav);
 	}
 }

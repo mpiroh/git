@@ -8,8 +8,10 @@ public class Stav {
 	public static final int POSUN = 97;
 
 	private int id;
-	private List<Stav> prechody[] = new ArrayList[MAX_ZNAKOV];
-	private List<Stav> epsilonPrechody = new ArrayList();
+	private long bitKod;
+	
+	private ArrayList<Stav> prechody[] = new ArrayList[MAX_ZNAKOV];
+	private ArrayList<Stav> epsilonPrechody = new ArrayList();
 
 	public Stav() {
 		for (int i = 0; i < prechody.length; i++) {
@@ -27,15 +29,15 @@ public class Stav {
 
 	//------------------------------------------------------------------------
 
-	public List<Stav>[] getPrechody() {
+	public ArrayList<Stav>[] getPrechody() {
 		return prechody;
 	}
 
-	public void setPrechody(List<Stav>[] prechody) {
+	public void setPrechody(ArrayList<Stav>[] prechody) {
 		this.prechody = prechody;
 	}
 
-	public List<Stav> getEpsilonPrechody() {
+	public ArrayList<Stav> getEpsilonPrechody() {
 		return epsilonPrechody;
 	}
 
@@ -49,6 +51,14 @@ public class Stav {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public long getBitKod() {
+		return bitKod;
+	}
+
+	public void setBitKod(long bitKod) {
+		this.bitKod = bitKod;
 	}
 
 	@Override
@@ -71,6 +81,22 @@ public class Stav {
 			sb.append("\n");
 		}
 		
+		return sb.toString();
+	}
+	
+	public String toStringBezE() {
+		StringBuilder sb = new StringBuilder();
+
+		for (char i = 0; i < prechody.length; i++) {
+			if (prechody[i].isEmpty())
+				continue;
+			char znak = (char) (i + POSUN);
+			for (Stav stav : prechody[i]) {
+				sb.append(znak + " -> ");
+				sb.append(stav.getId());
+				sb.append("\n");
+			}
+		}		
 		return sb.toString();
 	}
 }

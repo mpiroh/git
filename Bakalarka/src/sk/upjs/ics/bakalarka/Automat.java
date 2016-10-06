@@ -6,11 +6,14 @@ import java.util.List;
 public class Automat {
 	private List<Stav> stavy = new ArrayList<Stav>();
 	private Stav pociatocnyStav;
-	private Stav koncovyStav;
-	private Stav aktualnyStav;
+	private List<Stav> koncoveStavy = new ArrayList<Stav>();
 	
 	public void pridajStav(Stav stav) {
 		stavy.add(stav);
+	}
+	
+	public void pridajKoncovyStav(Stav stav) {
+		koncoveStavy.add(stav);
 	}
 	
 	public void vyrobId() {
@@ -19,6 +22,11 @@ public class Automat {
 			stav.setId(id);
 			id++;
 		}
+	}
+	
+	public Automat determinizuj() {
+		PrevodNFANaDFA prevod = new PrevodNFANaDFA();
+		return prevod.toDFAAutomat(this);
 	}
 	
 	//------------------------------------------------------------------------
@@ -30,20 +38,12 @@ public class Automat {
 		this.pociatocnyStav = pociatocnyStav;
 	}
 
-	public Stav getKoncovyStav() {
-		return koncovyStav;
+	public List<Stav> getKoncoveStavy() {
+		return koncoveStavy;
 	}
 
-	public void setKoncovyStav(Stav koncovyStav) {
-		this.koncovyStav = koncovyStav;
-	}
-
-	public Stav getAktualnyStav() {
-		return aktualnyStav;
-	}
-
-	public void setAktualnyStav(Stav aktualnyStav) {
-		this.aktualnyStav = aktualnyStav;
+	public void setKoncoveStavy(List<Stav> koncovyStav) {
+		this.koncoveStavy = koncovyStav;
 	}
 	
 	public List<Stav> getStavy() {
@@ -61,11 +61,28 @@ public class Automat {
 			sb.append("Stav " + stav.getId() + ": ");
 			if (stav == pociatocnyStav)
 				sb.append("(poèiatoèný) ");
-			if (stav == koncovyStav)
+			if (stav == koncoveStavy)
 				sb.append("(koncový) ");
 			sb.append("\n");
 			
 			sb.append(stav);
+			sb.append("\n");
+		}
+		
+		return sb.toString();
+	}
+	
+	public String toStringBezE() {
+		StringBuilder sb = new StringBuilder();
+		for (Stav stav : stavy) {
+			sb.append("Stav " + stav.getId() + ": ");
+			if (stav == pociatocnyStav)
+				sb.append("(poèiatoèný) ");
+			if (koncoveStavy.contains(stav))
+				sb.append("(koncový) ");
+			sb.append("\n");
+			
+			sb.append(stav.toStringBezE());
 			sb.append("\n");
 		}
 		

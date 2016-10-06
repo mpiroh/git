@@ -5,7 +5,6 @@ import java.util.List;
 
 public class RegularnyVyraz {
 	private String vyraz;
-	private Automat automat;
 
 	public RegularnyVyraz(String vyraz) {
 		this.vyraz = vyraz;
@@ -13,7 +12,7 @@ public class RegularnyVyraz {
 	}
 	
 	public Automat toAutomat() {
-		Prevod prevod = new Prevod();
+		PrevodRegVyrazNaNFA prevod = new PrevodRegVyrazNaNFA();
 		return prevod.toAutomat(this.vyraz);
 	}
 
