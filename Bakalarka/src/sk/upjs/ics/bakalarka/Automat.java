@@ -24,6 +24,32 @@ public class Automat {
 		}
 	}
 	
+	public void vyrobBitKody() {
+		long bitKod = 1;
+		for (Stav stav : stavy) {
+			stav.setBitKod(bitKod);
+			bitKod = bitKod * 10;
+		}
+	}
+	
+	public void pridajPrechod(Stav s1, char znak, Stav s2) {
+		for (Stav stav : stavy) {
+			if (stav == s1) {
+				stav.pridajPrechod(znak, s2);
+				return;
+			}
+		}
+	}
+	
+	public Stav getStavPodlaBitKodu(long bitKod) {
+		for (Stav stav : stavy) {
+			if (stav.getBitKod() == bitKod) {
+				return stav;
+			}
+		}
+		return null;
+	}
+	
 	public Automat determinizuj() {
 		PrevodNFANaDFA prevod = new PrevodNFANaDFA();
 		return prevod.toDFAAutomat(this);
@@ -83,6 +109,23 @@ public class Automat {
 			sb.append("\n");
 			
 			sb.append(stav.toStringBezE());
+			sb.append("\n");
+		}
+		
+		return sb.toString();
+	}
+
+	public String toStringBitKody() {
+		StringBuilder sb = new StringBuilder();
+		for (Stav stav : stavy) {
+			sb.append("Stav " + stav.getBitKod() + ": ");
+			if (stav == pociatocnyStav)
+				sb.append("(poèiatoèný) ");
+			if (stav == koncoveStavy)
+				sb.append("(koncový) ");
+			sb.append("\n");
+			
+			sb.append(stav.toStringBitKody());
 			sb.append("\n");
 		}
 		

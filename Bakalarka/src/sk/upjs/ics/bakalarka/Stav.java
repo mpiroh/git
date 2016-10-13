@@ -99,4 +99,26 @@ public class Stav {
 		}		
 		return sb.toString();
 	}
+	
+	public String toStringBitKody() {
+		StringBuilder sb = new StringBuilder();
+
+		for (char i = 0; i < prechody.length; i++) {
+			if (prechody[i].isEmpty())
+				continue;
+			char znak = (char) (i + POSUN);
+			for (Stav stav : prechody[i]) {
+				sb.append(znak + " -> ");
+				sb.append(stav.getBitKod());
+				sb.append("\n");
+			}
+		}
+		for (Stav stav : epsilonPrechody) {
+			sb.append("E" + " -> ");
+			sb.append(stav.getBitKod());
+			sb.append("\n");
+		}
+		
+		return sb.toString();
+	}
 }
