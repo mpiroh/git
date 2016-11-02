@@ -27,7 +27,7 @@ public class Spustac {
 		s2.pridajPrechod('a', s2);
 		s2.pridajPrechod('a', s3);
 		s2.pridajPrechod('b', s3);
-		s3.pridajPrechod('a', s1);
+		s3.pridajPrechod('a', s1);s3.pridajPrechod('c', s2);
 		
 		Automat automat = new Automat();
 		automat.setPociatocnyStav(s1);
@@ -39,9 +39,9 @@ public class Spustac {
 		
 		//System.out.println(automat.toStringBitKody());
 		
-		System.out.println((automat.determinizuj()).toStringBitKody());	*/	
+		System.out.println((automat.determinizuj()).toStringBitKody());*/	
 		
-		Stav s1 = new Stav();
+		/*Stav s1 = new Stav();
 		Stav s2 = new Stav();
 		Stav s3 = new Stav();
 		Stav s4 = new Stav();
@@ -60,7 +60,51 @@ public class Spustac {
 		automat.setPociatocnyStav(s1);
 		
 		automat.vyrobBitKody();
-		System.out.println(automat.determinizuj().toStringBitKody());
+		System.out.println(automat.determinizuj().toStringBitKody());*/
 		
+		/*Stav s1 = new Stav();
+		Stav s2 = new Stav();
+		Stav s3 = new Stav();
+		Stav s4 = new Stav();
+		s1.pridajPrechod('a', s2);
+		s1.pridajPrechod('a', s3);
+		s1.pridajPrechod('a', s4);
+		s2.pridajPrechod('b', s1);
+		s2.pridajPrechod('b', s2);
+		s2.pridajPrechod('c', s4);
+		s3.pridajPrechod('b', s3);
+		s3.pridajPrechod('c', s2);
+		s4.pridajPrechod('b', s4);
+		
+		Automat automat = new Automat();
+		automat.pridajStav(s1);
+		automat.pridajStav(s2);
+		automat.pridajStav(s3);
+		automat.pridajStav(s4);
+		automat.setPociatocnyStav(s1);
+		
+		automat.vyrobBitKody();
+		System.out.println(automat.determinizuj().toStringBitKody());*/
+		
+		//PRIKLAD S EPSILONAMI BEZ CYKLOV:
+		Stav s1 = new Stav();
+		Stav s2 = new Stav();
+		Stav s3 = new Stav();
+		Stav s4 = new Stav();
+		s1.pridajPrechod('a', s2);
+		s1.pridajEpsilonPrechod(s3);
+		s2.pridajEpsilonPrechod(s3);
+		s4.pridajEpsilonPrechod(s2);
+		
+		Automat automat = new Automat();
+		automat.pridajStav(s1);
+		automat.pridajStav(s2);
+		automat.pridajStav(s3);
+		automat.pridajStav(s4);
+		automat.setPociatocnyStav(s1);
+		
+		automat.vyrobBitKody();
+		Automat detAutomat = automat.determinizuj();
+		System.out.println(detAutomat.toStringBitKody());
 	}
 }
