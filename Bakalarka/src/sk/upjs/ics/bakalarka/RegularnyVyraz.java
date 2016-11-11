@@ -12,8 +12,10 @@ public class RegularnyVyraz {
 	}
 	
 	public Automat toAutomat() {
-		PrevodRegVyrazNaNFA prevod = new PrevodRegVyrazNaNFA();
-		return prevod.toAutomat(this.vyraz);
+		PrevodRegVyrazNaNFA prevodRegVyrazNaNFA = new PrevodRegVyrazNaNFA();
+		Automat automat = prevodRegVyrazNaNFA.toAutomat(vyraz);
+		Automat detAutomat = automat.determinizuj();
+		return detAutomat;
 	}
 
 	public void odstranBodky() {

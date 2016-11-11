@@ -1,110 +1,16 @@
 package sk.upjs.ics.bakalarka;
 
-import java.util.ArrayList;
+import java.math.BigInteger;
 
 public class Spustac {
 	public static final int POSUN = 97;
 	
 	public static void main(String[] args) {
-		//RegularnyVyraz rv = new RegularnyVyraz("a*");
-		//Automat automat = rv.toAutomat();
-				
-		//System.out.println(automat);
+		RegularnyVyraz rv = new RegularnyVyraz("");
+		PrevodRegVyrazNaNFA p = new PrevodRegVyrazNaNFA();
+		Automat a = p.toAutomat(rv.getVyraz());
+		Automat automat = a.determinizuj();
 		
-		//PrevodNFANaDFA prevod = new PrevodNFANaDFA();
-		//prevod.setAutomat(automat);
-		//prevod.odstranEpsilonPrechody();
-		//System.out.println(prevod.getAutomat().toStringBezE());
-		
-		//System.out.println((char)(1 + POSUN));
-		
-		//PRIKLAD NA DETERMINIZACIU
-		/*Stav s1 = new Stav();
-		Stav s2 = new Stav();
-		Stav s3 = new Stav();
-		s1.pridajPrechod('b', s2);
-		s1.pridajPrechod('b', s3);
-		s2.pridajPrechod('a', s2);
-		s2.pridajPrechod('a', s3);
-		s2.pridajPrechod('b', s3);
-		s3.pridajPrechod('a', s1);s3.pridajPrechod('c', s2);
-		
-		Automat automat = new Automat();
-		automat.setPociatocnyStav(s1);
-		automat.pridajKoncovyStav(s1);
-		automat.pridajStav(s1);
-		automat.pridajStav(s2);
-		automat.pridajStav(s3);
-		automat.vyrobBitKody();
-		
-		//System.out.println(automat.toStringBitKody());
-		
-		System.out.println((automat.determinizuj()).toStringBitKody());*/	
-		
-		/*Stav s1 = new Stav();
-		Stav s2 = new Stav();
-		Stav s3 = new Stav();
-		Stav s4 = new Stav();
-		s1.pridajPrechod('a', s3);
-		s1.pridajPrechod('b', s3);
-		s2.pridajPrechod('b', s1);
-		s2.pridajPrechod('b', s4);
-		s3.pridajPrechod('b', s4);
-		s4.pridajPrechod('a', s2);
-		
-		Automat automat = new Automat();
-		automat.pridajStav(s1);
-		automat.pridajStav(s2);
-		automat.pridajStav(s3);
-		automat.pridajStav(s4);
-		automat.setPociatocnyStav(s1);
-		
-		automat.vyrobBitKody();
-		System.out.println(automat.determinizuj().toStringBitKody());*/
-		
-		/*Stav s1 = new Stav();
-		Stav s2 = new Stav();
-		Stav s3 = new Stav();
-		Stav s4 = new Stav();
-		s1.pridajPrechod('a', s2);
-		s1.pridajPrechod('a', s3);
-		s1.pridajPrechod('a', s4);
-		s2.pridajPrechod('b', s1);
-		s2.pridajPrechod('b', s2);
-		s2.pridajPrechod('c', s4);
-		s3.pridajPrechod('b', s3);
-		s3.pridajPrechod('c', s2);
-		s4.pridajPrechod('b', s4);
-		
-		Automat automat = new Automat();
-		automat.pridajStav(s1);
-		automat.pridajStav(s2);
-		automat.pridajStav(s3);
-		automat.pridajStav(s4);
-		automat.setPociatocnyStav(s1);
-		
-		automat.vyrobBitKody();
-		System.out.println(automat.determinizuj().toStringBitKody());*/
-		
-		//PRIKLAD S EPSILONAMI BEZ CYKLOV:
-		Stav s1 = new Stav();
-		Stav s2 = new Stav();
-		Stav s3 = new Stav();
-		Stav s4 = new Stav();
-		s1.pridajPrechod('a', s2);
-		s1.pridajEpsilonPrechod(s3);
-		s2.pridajEpsilonPrechod(s3);
-		s4.pridajEpsilonPrechod(s2);
-		
-		Automat automat = new Automat();
-		automat.pridajStav(s1);
-		automat.pridajStav(s2);
-		automat.pridajStav(s3);
-		automat.pridajStav(s4);
-		automat.setPociatocnyStav(s1);
-		
-		automat.vyrobBitKody();
-		Automat detAutomat = automat.determinizuj();
-		System.out.println(detAutomat.toStringBitKody());
+		System.out.println(a.toString());
 	}
 }

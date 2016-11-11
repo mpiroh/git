@@ -87,7 +87,7 @@ public class Automat {
 			sb.append("Stav " + stav.getId() + ": ");
 			if (stav == pociatocnyStav)
 				sb.append("(poèiatoèný) ");
-			if (stav == koncoveStavy)
+			if (koncoveStavy.contains(stav))
 				sb.append("(koncový) ");
 			sb.append("\n");
 			

@@ -21,7 +21,8 @@ public class PrevodNFANaDFA {
 	public Automat toDFAAutomat(Automat oldAutomat) {
 		this.abeceda = zistiAbecedu(oldAutomat);
 		this.epsilonPrechody = nacitajEpsilonPrechody(oldAutomat);
-		
+		oldAutomat.vyrobBitKody();
+
 		Automat newAutomat = new Automat();
 		
 		Stav pociatocnyStav = new Stav();
@@ -53,12 +54,12 @@ public class PrevodNFANaDFA {
 			long bitKod = stav.getBitKod();
 			
 			for (char znak : abeceda) {
-				int poradie = 1;
+				long poradie = 1;
 				long cielovyBitKod = 0;
-				
+
 				//zistim cielovy bitkod zatial bez eplsionovych prechodov
 				while (bitKod / poradie > 0) {
-					long bit = (bitKod % (poradie*10)) / poradie;
+					long bit = (bitKod / poradie) % 10;
 					if (bit == 1) {
 						for (Stav sss : oldAutomat.getStavPodlaBitKodu(poradie).getPrechody()[((int)znak)-POSUN]) {
 							cielovyBitKod = skontrolujBitKod(cielovyBitKod + sss.getBitKod());
@@ -88,7 +89,6 @@ public class PrevodNFANaDFA {
 				//pridam bitkody podla epsilonov
 				
 				
-				
 				boolean stavUzExistuje = false;
 				
 				//zistim ci taky stav uz existuje (podla provnania bitkodov)
@@ -114,6 +114,21 @@ public class PrevodNFANaDFA {
 			}
 		}
 		
+		//nastavenie kocnovych stavov
+		List<Long> koncoveStavyBitKody = new ArrayList<>();
+		for (Stav s : oldAutomat.getKoncoveStavy()) {
+			koncoveStavyBitKody.add(s.getBitKod());
+		}
+		for (Stav s : newAutomat.getStavy()) {
+			for (long bitKod : koncoveStavyBitKody) {
+				if ((s.getBitKod() / bitKod) % 10 == 1) {
+					newAutomat.pridajKoncovyStav(s);
+					break;
+				}
+			}
+		}
+		
+		newAutomat.vyrobId();
 		return newAutomat;
 	}
 	
