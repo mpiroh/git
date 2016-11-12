@@ -9,6 +9,7 @@ public class Stav {
 
 	private int id;
 	private long bitKod;
+	private int skupina;
 	
 	private ArrayList<Stav> prechody[] = new ArrayList[MAX_ZNAKOV];
 	private ArrayList<Stav> epsilonPrechody = new ArrayList();
@@ -59,6 +60,14 @@ public class Stav {
 
 	public void setBitKod(long bitKod) {
 		this.bitKod = bitKod;
+	}
+
+	public int getSkupina() {
+		return skupina;
+	}
+
+	public void setSkupina(int skupina) {
+		this.skupina = skupina;
 	}
 
 	@Override

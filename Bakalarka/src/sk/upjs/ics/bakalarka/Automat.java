@@ -50,9 +50,43 @@ public class Automat {
 		return null;
 	}
 	
+	public List<Stav> getStavyPodlaSkupiny(int skupina) {
+		List<Stav> stavyPodlaSkupiny = new ArrayList<>();
+		for (Stav stav : stavy) {
+			if (stav.getSkupina() == skupina) {
+				stavyPodlaSkupiny.add(stav);
+			}
+		}
+		return stavyPodlaSkupiny;
+	}
+	
+	public void vyrobSkupiny() {
+		for (Stav stav : stavy) {
+			if (koncoveStavy.contains(stav)) {
+				stav.setSkupina(1);
+			} else {
+				stav.setSkupina(2);
+			}
+		}
+	}
+	
+	public Stav getNejakyStavPodlaSkupiny(int skupina) {
+		for (Stav stav : stavy) {
+			if (stav.getSkupina() == skupina) {
+				return stav;
+			}
+		}
+		return null;
+	}
+	
 	public Automat determinizuj() {
 		PrevodNFANaDFA prevod = new PrevodNFANaDFA();
 		return prevod.toDFAAutomat(this);
+	}
+	
+	public Automat minimalizuj() {
+		Minimalizacia minimalizacia = new Minimalizacia();
+		return minimalizacia.minimize(this);
 	}
 	
 	//------------------------------------------------------------------------
@@ -98,23 +132,6 @@ public class Automat {
 		return sb.toString();
 	}
 	
-	public String toStringBezE() {
-		StringBuilder sb = new StringBuilder();
-		for (Stav stav : stavy) {
-			sb.append("Stav " + stav.getId() + ": ");
-			if (stav == pociatocnyStav)
-				sb.append("(poèiatoèný) ");
-			if (koncoveStavy.contains(stav))
-				sb.append("(koncový) ");
-			sb.append("\n");
-			
-			sb.append(stav.toStringBezE());
-			sb.append("\n");
-		}
-		
-		return sb.toString();
-	}
-
 	public String toStringBitKody() {
 		StringBuilder sb = new StringBuilder();
 		for (Stav stav : stavy) {
@@ -131,4 +148,22 @@ public class Automat {
 		
 		return sb.toString();
 	}
+	
+	/*public String toStringBezE() {
+		StringBuilder sb = new StringBuilder();
+		for (Stav stav : stavy) {
+			sb.append("Stav " + stav.getId() + ": ");
+			if (stav == pociatocnyStav)
+				sb.append("(poèiatoèný) ");
+			if (koncoveStavy.contains(stav))
+				sb.append("(koncový) ");
+			sb.append("\n");
+			
+			sb.append(stav.toStringBezE());
+			sb.append("\n");
+		}
+		
+		return sb.toString();
+	}*/
+	
 }
