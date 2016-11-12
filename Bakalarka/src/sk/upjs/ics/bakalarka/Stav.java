@@ -1,7 +1,6 @@
 package sk.upjs.ics.bakalarka;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Stav {
 	public static final int MAX_ZNAKOV = 26;

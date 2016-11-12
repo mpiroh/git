@@ -1,8 +1,5 @@
 package sk.upjs.ics.bakalarka;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RegularnyVyraz {
 	private String vyraz;
 

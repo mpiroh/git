@@ -24,6 +24,13 @@ public class Automat {
 		}
 	}
 	
+	/*public void vyrobBitKody() {
+		long bitKod = 1;
+		for (Stav stav : stavy) {
+			stav.setBitKod(bitKod);
+			bitKod = bitKod * 10;
+		}
+	}*/
 	public void vyrobBitKody() {
 		long bitKod = 1;
 		for (Stav stav : stavy) {
@@ -41,6 +48,14 @@ public class Automat {
 		}
 	}
 	
+	/*public Stav getStavPodlaBitKodu(long bitKod) {
+		for (Stav stav : stavy) {
+			if (stav.getBitKod() == bitKod) {
+				return stav;
+			}
+		}
+		return null;
+	}*/
 	public Stav getStavPodlaBitKodu(long bitKod) {
 		for (Stav stav : stavy) {
 			if (stav.getBitKod() == bitKod) {
