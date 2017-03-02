@@ -32,10 +32,10 @@ public class Automat {
 		}
 	}*/
 	public void vyrobBitKody() {
-		long bitKod = 1;
+		int i = 0;
 		for (Stav stav : stavy) {
-			stav.setBitKod(bitKod);
-			bitKod = bitKod * 10;
+			stav.setBitKod((long) (Math.pow(2, i)));
+			i++;
 		}
 	}
 	

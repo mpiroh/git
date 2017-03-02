@@ -34,7 +34,7 @@ public class PrevodNFANaDFA {
 			if (!e.getEpsilonPrechody().isEmpty()) {
 				for (Stav epsilonStav : e.getEpsilonPrechody()) {
 					if (!anticyklickyZoznam.contains(epsilonStav)) {
-						pociatocnyBitKod = skontrolujBitKod(pociatocnyBitKod + epsilonStav.getBitKod());
+						pociatocnyBitKod = pociatocnyBitKod | epsilonStav.getBitKod();
 						epsilonRad.add(epsilonStav);
 						anticyklickyZoznam.add(epsilonStav);
 					}
@@ -54,15 +54,16 @@ public class PrevodNFANaDFA {
 			long bitKod = stav.getBitKod();
 			
 			for (char znak : abeceda) {
-				long poradie = 1;
+				long i = 0;
 				long cielovyBitKod = 0;
 
 				//zistim cielovy bitkod zatial bez eplsionovych prechodov
-				while (bitKod / poradie > 0) {
-					long bit = (bitKod / poradie) % 10;
-					if (bit == 1) {
-						for (Stav sss : oldAutomat.getStavPodlaBitKodu(poradie).getPrechody()[((int)znak)-POSUN]) {
-							cielovyBitKod = skontrolujBitKod(cielovyBitKod + sss.getBitKod());
+				while (Math.pow(2, i) <= bitKod) {
+					long bit = (bitKod & (1L << i));
+					if (bit != 0) {
+						for (Stav sss : oldAutomat.getStavPodlaBitKodu((long) (Math.pow(2, i)))
+								.getPrechody()[((int)znak)-POSUN]) {
+							cielovyBitKod = cielovyBitKod | sss.getBitKod();
 							
 							if (epsilonPrechody.get(sss) != null) {
 								epsilonRad.add(sss);
@@ -71,7 +72,7 @@ public class PrevodNFANaDFA {
 									if (epsilonPrechody.get(e) != null) {
 										for (Stav epsilonStav : epsilonPrechody.get(e)) {
 											if (!anticyklickyZoznam.contains(epsilonStav)) {
-												cielovyBitKod = skontrolujBitKod(cielovyBitKod + epsilonStav.getBitKod());
+												cielovyBitKod = cielovyBitKod | epsilonStav.getBitKod();
 												epsilonRad.add(epsilonStav);
 												anticyklickyZoznam.add(epsilonStav);
 											}
@@ -83,11 +84,8 @@ public class PrevodNFANaDFA {
 					} else { //if (bit == 0)
 						//
 					}
-					poradie = poradie * 10;
-				}
-				
-				//pridam bitkody podla epsilonov
-				
+					i++;
+				}				
 				
 				boolean stavUzExistuje = false;
 				
@@ -121,7 +119,7 @@ public class PrevodNFANaDFA {
 		}
 		for (Stav s : newAutomat.getStavy()) {
 			for (long bitKod : koncoveStavyBitKody) {
-				if ((s.getBitKod() / bitKod) % 10 == 1) {
+				if ((s.getBitKod() & bitKod) != 0) {
 					newAutomat.pridajKoncovyStav(s);
 					break;
 				}
@@ -132,7 +130,7 @@ public class PrevodNFANaDFA {
 		return newAutomat;
 	}
 	
-	public long skontrolujBitKod(Long bitKod) {
+	/*public long skontrolujBitKod(Long bitKod) {
 		long novyBitKod = bitKod;
 		int i = 0;
 		while(bitKod > 0) {
@@ -144,7 +142,7 @@ public class PrevodNFANaDFA {
 			i++;
 		}
 		return novyBitKod;
-	}
+	}*/
 	
 	private List<Character> zistiAbecedu(Automat automat) {
 		Set<Character> mnozinaAbeceda = new HashSet<>();

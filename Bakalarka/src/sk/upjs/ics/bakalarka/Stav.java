@@ -72,7 +72,7 @@ public class Stav {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-
+		
 		for (char i = 0; i < prechody.length; i++) {
 			if (prechody[i].isEmpty())
 				continue;

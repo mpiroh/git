@@ -1,20 +1,28 @@
 package sk.upjs.ics.bakalarka;
 
+import dk.brics.automaton.Automaton;
+import dk.brics.automaton.RegExp;
+
 public class Spustac {
 	public static final int POSUN = 97;
 	
 	public static void main(String[] args) {
-		//DETERMINIZACIA
-		/*RegularnyVyraz rv = new RegularnyVyraz("");
+		long time = System.currentTimeMillis();
+		RegularnyVyraz rv = new RegularnyVyraz("a(aa)*+a(aa)*b(aaa)*+(aa)*ba(aa)*");
 		PrevodRegVyrazNaNFA p = new PrevodRegVyrazNaNFA();
-		Automat a = p.toAutomat(rv.getVyraz());
-		Automat automat = a.determinizuj();
+		PrevodNFANaDFA pp = new PrevodNFANaDFA();
+		Minimalizacia min = new Minimalizacia();
 		
-		System.out.println(automat.toString());*/
+		Automat n = p.toAutomat(rv.getVyraz());
+		Automat d = pp.toDFAAutomat(n);
+		Automat m = min.minimize(d);
 		
-		//MINIMALIZACIA
-		RegularnyVyraz rv = new RegularnyVyraz("(a+b)*+(c+d)*");
-		Automat a = rv.toAutomat().minimalizuj();
-		System.out.println(a);
+		System.out.println(m);
+		System.out.println((System.currentTimeMillis() - time) + " ms");
+		
+		/*long time = System.currentTimeMillis();
+		RegExp regExp = new RegExp("a(aa)*+a(aa)*b(aaa)*+(aa)*ba(aa)*");
+		System.out.println(regExp.toAutomaton());
+		System.out.println((System.currentTimeMillis() - time) + " ms");*/
 	}
 }
