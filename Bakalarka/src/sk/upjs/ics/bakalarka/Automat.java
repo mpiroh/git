@@ -24,6 +24,12 @@ public class Automat {
 		}
 	}
 	
+	public void vymazId() {
+		for (Stav stav : stavy) {
+			stav.setId(-1);
+		}
+	}
+	
 	/*public void vyrobBitKody() {
 		long bitKod = 1;
 		for (Stav stav : stavy) {
@@ -88,6 +94,15 @@ public class Automat {
 	public Stav getNejakyStavPodlaSkupiny(int skupina) {
 		for (Stav stav : stavy) {
 			if (stav.getSkupina() == skupina) {
+				return stav;
+			}
+		}
+		return null;
+	}
+	
+	public Stav getStavPodlaId(int id) {
+		for (Stav stav: stavy) {
+			if (stav.getId() == id) {
 				return stav;
 			}
 		}
