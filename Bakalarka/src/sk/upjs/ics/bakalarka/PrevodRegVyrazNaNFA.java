@@ -67,7 +67,13 @@ public class PrevodRegVyrazNaNFA {
 	public void konkatenacia(char znak) {
 		Stav s1 = new Stav();
 		automat.pridajStav(s1);
-		aktualnyStav.pridajPrechod(znak, s1);
+		
+		if (znak == 'E') {
+			aktualnyStav.pridajEpsilonPrechod(s1);
+		} else {
+			aktualnyStav.pridajPrechod(znak, s1);
+		}
+		
 		aktualnyStav = s1;
 	}
 
@@ -80,7 +86,13 @@ public class PrevodRegVyrazNaNFA {
 		automat.pridajStav(s3);
 		aktualnyStav.pridajEpsilonPrechod(s1);
 		aktualnyStav.pridajEpsilonPrechod(s3);
-		s1.pridajPrechod(znak, s2);
+		
+		if (znak == 'E') {
+			s1.pridajEpsilonPrechod(s2);
+		} else {
+			s1.pridajPrechod(znak, s2);
+		}
+		
 		s2.pridajEpsilonPrechod(s1);
 		s2.pridajEpsilonPrechod(s3);
 		aktualnyStav = s3;

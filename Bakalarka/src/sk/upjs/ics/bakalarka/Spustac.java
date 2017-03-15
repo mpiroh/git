@@ -10,7 +10,7 @@ public class Spustac {
 	
 	public static void main(String[] args) {
 		/*long time = System.currentTimeMillis();
-		RegularnyVyraz rv = new RegularnyVyraz("a(b*ab*aa)*b*");
+		RegularnyVyraz rv = new RegularnyVyraz("aab");
 		PrevodRegVyrazNaNFA p = new PrevodRegVyrazNaNFA();
 		PrevodNFANaDFA pp = new PrevodNFANaDFA();
 		Minimalizacia min = new Minimalizacia();
@@ -29,8 +29,8 @@ public class Spustac {
 		
 		long time = System.currentTimeMillis();
 		Porovnavac p = new Porovnavac();
-		System.out.println(p.compare("((aa+bb)+(ab+ba)(aa+bb)*(ab+ba))*",
-									 "((aa+bb)*(ab+ba)(aa+bb)*(ab+ba))*(aa+bb)*"));
+		System.out.println(p.compare("aab",
+									 "aab"));
 		System.out.println("Time: " + (System.currentTimeMillis()-time));
 		
 		/*RegExp r = new RegExp("a(b*ab*aa)*");

@@ -28,7 +28,8 @@ public class Porovnavac {
 		int i = 0;
 
 		while (true) {
-			int temp = newId;
+			//int temp = newId;
+			System.out.println(automat1);
 			for (List<Stav> prechody : automat1.getStavPodlaId(i).getPrechody()) {
 				for (Stav stav : prechody) {
 					if (stav.getId() == -1) {
@@ -36,10 +37,13 @@ public class Porovnavac {
 					}
 				}
 			}
-			if (temp == newId) {
+			//if (temp == newId) {
+			//	break;
+			//}
+			i++;
+			if (i > newId) {
 				break;
 			}
-			i++;
 		}
 		
 		// zmena id-ciek prveho automatu
@@ -48,7 +52,7 @@ public class Porovnavac {
 		i = 0;
 
 		while (true) {
-			int temp = newId;
+			//int temp = newId;
 			for (List<Stav> prechody : automat2.getStavPodlaId(i).getPrechody()) {
 				for (Stav stav : prechody) {
 					if (stav.getId() == -1) {
@@ -56,10 +60,13 @@ public class Porovnavac {
 					}
 				}
 			}
-			if (temp == newId) {
+			//if (temp == newId) {
+			//	break;
+			//}
+			i++;
+			if (i > newId) {
 				break;
 			}
-			i++;
 		}
 		
 		// porovnanie
@@ -81,6 +88,15 @@ public class Porovnavac {
 			}
 		}
 		
-		return list1.equals(list2);
+		List<Integer> finalStates1 = new ArrayList<>();
+		List<Integer> finalStates2 = new ArrayList<>();
+		for (Stav stav : automat1.getKoncoveStavy()) {
+			finalStates1.add(stav.getId());
+		}
+		for (Stav stav : automat2.getKoncoveStavy()) {
+			finalStates2.add(stav.getId());
+		}
+		
+		return list1.equals(list2) && finalStates1.equals(finalStates2);
 	}
 }
