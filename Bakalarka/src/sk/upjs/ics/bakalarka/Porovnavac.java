@@ -6,11 +6,24 @@ import java.util.List;
 public class Porovnavac {
 	public boolean compare(String vyraz1, String vyraz2) {
 		RegularnyVyraz rv1 = new RegularnyVyraz(vyraz1);
+		RegularnyVyraz rv2 = new RegularnyVyraz(vyraz2);
+		
+		// kontrola identickosti vyrazov
+		if (rv1.getVyraz().equals(rv2.getVyraz())) {
+			System.out.println("here1");
+			return true;
+		}
+		
+		// kontrola rozdielnej abecedy
+		if (!rv1.getAlphabet().equals(rv2.getAlphabet())) {
+			System.out.println("here2");
+			return false;
+		}
+		
 		Automat n = rv1.toAutomat();
 		Automat d = n.determinizuj();
 		Automat automat1 = d.minimalizuj();
-
-		RegularnyVyraz rv2 = new RegularnyVyraz(vyraz2);
+		
 		n = rv2.toAutomat();
 		d = n.determinizuj();
 		Automat automat2 = d.minimalizuj();
@@ -29,7 +42,6 @@ public class Porovnavac {
 
 		while (true) {
 			//int temp = newId;
-			System.out.println(automat1);
 			for (List<Stav> prechody : automat1.getStavPodlaId(i).getPrechody()) {
 				for (Stav stav : prechody) {
 					if (stav.getId() == -1) {
@@ -69,7 +81,7 @@ public class Porovnavac {
 			}
 		}
 		
-		// porovnanie
+		// porovnanie prechodov a koncovych stavov
 		int size = automat1.getStavy().size();
 		List<Integer> list1 = new ArrayList<>();
 		for (int j = 0; j < size; j++) {

@@ -1,5 +1,8 @@
 package sk.upjs.ics.bakalarka;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class RegularnyVyraz {
 	private String vyraz;
 
@@ -23,6 +26,16 @@ public class RegularnyVyraz {
 				novyVyraz.append(znak);
 		}
 		this.vyraz = novyVyraz.toString();
+	}
+	
+	public Set<Character> getAlphabet() {
+		Set<Character> alphabet = new HashSet<>();
+		for (int i = 0; i < vyraz.length(); i++) {
+			if (vyraz.charAt(i) != 'E') {
+				alphabet.add(vyraz.charAt(i));
+			}
+		}
+		return alphabet;
 	}
 		
 	//------------------------------------------------------------------------

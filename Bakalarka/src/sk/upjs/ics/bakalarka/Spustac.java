@@ -29,8 +29,8 @@ public class Spustac {
 		
 		long time = System.currentTimeMillis();
 		Porovnavac p = new Porovnavac();
-		System.out.println(p.compare("aab",
-									 "aab"));
+		System.out.println(p.compare("a(a+b)*(a+b)*(a+b)*(a+b)*(a+b)*(a+b)*(a+b)*(a+b)*",
+									 "a(a+b)*(a+b)*(a+b)*(a+b)*(a+b)*(a+b)*(a+b)*(a+b)*"));
 		System.out.println("Time: " + (System.currentTimeMillis()-time));
 		
 		/*RegExp r = new RegExp("a(b*ab*aa)*");

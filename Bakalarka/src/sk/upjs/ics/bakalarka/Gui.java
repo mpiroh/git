@@ -1,6 +1,7 @@
 package sk.upjs.ics.bakalarka;
 
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 
 public class Gui extends JFrame {
@@ -30,6 +32,7 @@ public class Gui extends JFrame {
 		resultLabel = new JLabel("...");
 
 		compareButton = new JButton("Compare");
+		compareButton.setPreferredSize(new Dimension(100, 25));
 		compareButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -70,7 +73,6 @@ public class Gui extends JFrame {
 		setContentPane(panel);
 		exp1TextField.setColumns(16);
 		exp2TextField.setColumns(16);
-		
 		panel.add(exp1TextField);
 		panel.add(exp2TextField);
 		panel.add(resultLabel);
