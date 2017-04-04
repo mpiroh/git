@@ -10,13 +10,11 @@ public class Porovnavac {
 		
 		// kontrola identickosti vyrazov
 		if (rv1.getVyraz().equals(rv2.getVyraz())) {
-			System.out.println("here1");
 			return true;
 		}
 		
 		// kontrola rozdielnej abecedy
 		if (!rv1.getAlphabet().equals(rv2.getAlphabet())) {
-			System.out.println("here2");
 			return false;
 		}
 		

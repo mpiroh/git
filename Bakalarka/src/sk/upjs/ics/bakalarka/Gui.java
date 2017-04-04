@@ -1,90 +1,28 @@
 package sk.upjs.ics.bakalarka;
 
-import java.awt.ComponentOrientation;
-import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.SwingWorker;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
-public class Gui extends JFrame {
+public class Gui {
 
-	private JPanel panel;
-	private JTextField exp1TextField;
-	private JTextField exp2TextField;
-	private JLabel resultLabel;
-	private JButton compareButton;
-	private boolean afterComparation = false;
-
-	public Gui() {
-		panel = new JPanel();
-		exp1TextField = new JTextField();
-		exp2TextField = new JTextField();
-		resultLabel = new JLabel("...");
-
-		compareButton = new JButton("Compare");
-		compareButton.setPreferredSize(new Dimension(100, 25));
-		compareButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (afterComparation) {
-					afterComparation = false;
-					resultLabel.setText("...");
-					compareButton.setText("Compare");
-				} else {
-					SwingWorker<Boolean, Void> swingWorker = new SwingWorker<Boolean, Void>() {
-
-						@Override
-						protected Boolean doInBackground() throws Exception {
-							Porovnavac porovnavac = new Porovnavac();
-							return porovnavac.compare(exp1TextField.getText(), exp2TextField.getText());
-						}
-
-						@Override
-						protected void done() {
-							try {
-								afterComparation = true;
-								resultLabel.setText(get().toString());
-								compareButton.setText("Clear");
-							} catch (Exception e) {
-							}
-						}
-					};
-					swingWorker.execute();
-				}
-			}
-		});
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Regular expression comparator");
-		setBounds(0, 0, 399, 110);
-		panel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-		panel.setLayout(new FlowLayout());
-		setContentPane(panel);
-		exp1TextField.setColumns(16);
-		exp2TextField.setColumns(16);
-		panel.add(exp1TextField);
-		panel.add(exp2TextField);
-		panel.add(resultLabel);
-		panel.add(compareButton);
-	}
+	private JFrame frame;
+	private JTextField textField1;
+	private JTextField textField2;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Gui gui = new Gui();
-					gui.setVisible(true);
+					Gui window = new Gui();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -92,4 +30,79 @@ public class Gui extends JFrame {
 		});
 	}
 
+	public Gui() {
+		initialize();
+	}
+
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 466, 308);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		textField1 = new JTextField();
+		textField1.setBounds(10, 11, 194, 20);
+		frame.getContentPane().add(textField1);
+		textField1.setColumns(10);
+		
+		textField2 = new JTextField();
+		textField2.setBounds(246, 11, 194, 20);
+		frame.getContentPane().add(textField2);
+		textField2.setColumns(10);
+		
+		JScrollPane scrollPane1 = new JScrollPane();
+		scrollPane1.setBounds(10, 42, 194, 182);
+		frame.getContentPane().add(scrollPane1);
+		
+		final JTextPane textPane1 = new JTextPane();
+		scrollPane1.setViewportView(textPane1);
+		
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBounds(246, 42, 194, 182);
+		frame.getContentPane().add(scrollPane2);
+		
+		final JTextPane textPane2 = new JTextPane();
+		scrollPane2.setViewportView(textPane2);
+		
+		JButton compareButton = new JButton("Compare");
+		compareButton.setBounds(10, 235, 89, 23);
+		frame.getContentPane().add(compareButton);
+		
+		JButton clearButton = new JButton("Clear");
+		clearButton.setBounds(109, 235, 89, 23);
+		frame.getContentPane().add(clearButton);
+		
+		final JLabel resultLabel = new JLabel("");
+		resultLabel.setBounds(208, 239, 89, 14);
+		frame.getContentPane().add(resultLabel);
+		
+		compareButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String regExp1 = textField1.getText();
+				String regExp2 = textField2.getText();
+				Porovnavac porovnavac = new Porovnavac();
+				
+				boolean result = porovnavac.compare(regExp1, regExp2);
+				resultLabel.setText(Boolean.toString(result));
+				
+				RegularnyVyraz rv1 = new RegularnyVyraz(regExp1);
+				textPane1.setText(rv1.toAutomat().determinizuj().minimalizuj().toString());
+				
+				RegularnyVyraz rv2 = new RegularnyVyraz(regExp2);
+				textPane2.setText(rv2.toAutomat().determinizuj().minimalizuj().toString());
+			}
+		});
+		
+		clearButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resultLabel.setText("");
+				textPane1.setText("");
+				textPane2.setText("");
+			}
+		});
+	}
 }
